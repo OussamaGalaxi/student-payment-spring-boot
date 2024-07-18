@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PaymentRestController {
      * @return List<Payment>
      */
     @GetMapping(path = "/payments/all")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public List<Payment> allPayments(){
         return paymentRepository.findAll();
     }
@@ -49,6 +51,7 @@ public class PaymentRestController {
      * @return Payment or null if doesn't exist
      */
     @GetMapping(path = "/payment")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public Optional<Payment> paymentById(String id) {
         return paymentRepository.findById(id);
     }
@@ -59,6 +62,7 @@ public class PaymentRestController {
      * @return List<Payment>
      */
     @GetMapping(path = "/payments/status/{status}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public List<Payment> paymentByStatus(@PathVariable(name = "status") PaymentStatus paymentStatus) {
         return paymentRepository.findByStatus(paymentStatus);
     }
@@ -69,6 +73,7 @@ public class PaymentRestController {
      * @return List<Payment>
      */
     @GetMapping(path = "/payments/type/{type}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public List<Payment> paymentByType(@PathVariable(name = "type") PaymentType paymentType) {
         return paymentRepository.findByType(paymentType);
     }
@@ -80,6 +85,7 @@ public class PaymentRestController {
      * @return Optional<Payment>
      */
     @PutMapping("/payments/{id}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<Payment> paymentStatusUpdate(@PathVariable String id,@RequestParam PaymentStatus status) {
         return paymentService.paymentStatusUpdate(id,status);
     }

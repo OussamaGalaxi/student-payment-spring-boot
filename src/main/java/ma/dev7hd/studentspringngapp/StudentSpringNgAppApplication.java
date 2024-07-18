@@ -24,13 +24,13 @@ public class StudentSpringNgAppApplication {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepository studentRepository, PaymentRepository paymentRepository) {
         return args -> {
-            studentRepository.save(Student.builder()
+            /*studentRepository.save(Student.builder()
                             .firstName("Oussama")
                             .lastName("Bissi")
                             .code("11223344")
                             .email("oussama.bissi@edu.ma")
                             .programId(Math.random() > 0.2 ? ProgramId.ISI
-                                    : Math.random() > 0.5 ? ProgramId.GI
+                          `          : Math.random() > 0.5 ? ProgramId.GI
                                     : Math.random() > 0.8 ? ProgramId.MF
                                     : ProgramId.IIR)
                     .build());
@@ -45,7 +45,7 @@ public class StudentSpringNgAppApplication {
                             : ProgramId.IIR)
                     .build());
             studentRepository.save(Student.builder()
-                    .firstName("Asmae")
+                    .firstName("Asmaa")
                     .lastName("hassani")
                     .code("44556677")
                     .email("asmae.hassani@edu.ma")
@@ -63,14 +63,14 @@ public class StudentSpringNgAppApplication {
                             : Math.random() > 0.5 ? ProgramId.GI
                             : Math.random() > 0.8 ? ProgramId.MF
                             : ProgramId.IIR)
-                    .build());
+                    .build());*/
             studentRepository.findAll().forEach(student -> {
                 for (int i = 0; i < 4; i++) {
                     double random = Math.random();
                     Payment payment = Payment.builder()
                             .amount((int) (random * 1000))
                             .student(student)
-                            .date(LocalDate.now())
+                            .date(LocalDate.of(2024,6,13))
                             .type(random >= 0.75 ? PaymentType.CASH : random >= 0.5 ? PaymentType.CHECK : random >= 0.25 ? PaymentType.DEPOSIT : PaymentType.TRANSFER)
                             .status(random >= 0.66 ? PaymentStatus.VALIDATED : random >= 0.33 ? PaymentStatus.CREATED : PaymentStatus.REJECTED )
                             .receipt("./static/recipes").build();

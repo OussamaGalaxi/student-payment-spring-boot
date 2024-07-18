@@ -8,6 +8,7 @@ import ma.dev7hd.studentspringngapp.repositories.StudentRepository;
 import ma.dev7hd.studentspringngapp.services.StudentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class StudentRestController {
      * @return List<Student>
      */
     @GetMapping(path = "/students/all")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
@@ -34,6 +36,7 @@ public class StudentRestController {
      * @return List<Student>
      */
     @GetMapping(path = "/student/program/{programId}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public List<Student> getStudentsByProgramId(@PathVariable ProgramId programId) {
         return studentRepository.findStudentByProgramId(programId);
     }
@@ -64,11 +67,13 @@ public class StudentRestController {
      * @return ResponseEntity<StudentDTO>
      */
     @PutMapping("/student/edit")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO){
         return studentService.editStudent(studentDTO);
     }
 
     @DeleteMapping("/student/delete/{code}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity deleteStudent(@PathVariable String code){
         return studentService.deleteStudent(code);
     }
